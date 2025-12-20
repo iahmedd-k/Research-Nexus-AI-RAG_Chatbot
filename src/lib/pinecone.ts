@@ -8,5 +8,14 @@ export const pinecone = new Pinecone({
 
 // Helper function to get the index instance
 export function getPineconeIndex() {
-    return pinecone.index('research-nexus-index'); // Use the name you defined in the Pinecone console
+  // Mock index for development
+  return {
+    upsert: async (vectors: any[]) => {
+      console.log('Mock upsert:', vectors.length, 'vectors');
+    },
+    query: async (options: any) => {
+      console.log('Mock query:', options);
+      return { matches: [] };
+    }
+  };
 }

@@ -15,3 +15,5 @@ const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
 const result = await model.generateContent(`Context:\n${context}\n\nQuestion:\n${question}`)
 return result.response.text()
 }
+
+// gimin

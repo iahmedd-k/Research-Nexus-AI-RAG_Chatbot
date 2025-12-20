@@ -23,6 +23,7 @@ metadata: { text: chunk }
 
 
 const index = getPineconeIndex()
+console.log('Mock upsert', vectors.length, 'vectors')
 await index.upsert(vectors)
 
 
