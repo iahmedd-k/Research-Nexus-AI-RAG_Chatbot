@@ -17,7 +17,7 @@ import './globals.css'
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 return (
 <html lang="en">
-<body className="bg-gradient-to-br from-slate-950 to-slate-900 text-white">
+<body className="bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 text-white min-h-screen">
 {children}
 </body>
 </html>

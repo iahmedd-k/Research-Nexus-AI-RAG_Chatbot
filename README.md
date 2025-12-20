@@ -36,17 +36,207 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 =======
-📚 Research-Nexus AI
+# Research Nexus AI
 
-Research-Nexus is an AI-powered research assistant that allows users to upload documents (PDFs), extract knowledge, and ask intelligent questions using a Retrieval-Augmented Generation (RAG) pipeline.
+![Research Nexus](https://img.shields.io/badge/Research-Nexus-blue?style=for-the-badge&logo=ai&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase)
+![Pinecone](https://img.shields.io/badge/Pinecone-000000?style=flat&logo=pinecone)
+![Gemini AI](https://img.shields.io/badge/Gemini_AI-4285F4?style=flat&logo=google)
 
-Built with Next.js App Router, Supabase, Pinecone, and Gemini AI, this project demonstrates a production-grade AI document analysis system with a modern dashboard UI.
+Research Nexus is a cutting-edge AI-powered research assistant that transforms how researchers interact with their documents. Upload research papers, extract insights, and engage in intelligent conversations using advanced Retrieval-Augmented Generation (RAG) technology.
 
-🚀 Features
+## ✨ Features
 
-🔐 Authentication (Supabase Auth)
+### 🔐 **Secure Authentication**
+- User registration and login with Supabase Auth
+- Protected routes and user-specific data isolation
+- Secure API endpoints with JWT authentication
 
-📄 Upload research papers (PDF)
+### 📄 **Smart Document Processing**
+- Upload PDF and DOCX research papers (up to 10MB)
+- Intelligent text extraction and chunking
+- Automatic vector embeddings using Gemini AI
+- Pinecone vector database for fast semantic search
+
+### 🤖 **Conversational AI Assistant**
+- Ask questions in natural language
+- Context-aware responses grounded in your documents
+- Citations and source references
+- Real-time chat interface with typing indicators
+
+### 🎨 **Modern UI/UX**
+- Beautiful gradient-based design
+- Responsive layout for all devices
+- Dark theme optimized for research work
+- Smooth animations and transitions
+- Mobile-friendly sidebar navigation
+
+### 📊 **Document Management**
+- View all uploaded documents
+- Track processing status
+- Document metadata and statistics
+- Secure cloud storage with Supabase
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: Supabase (PostgreSQL)
+- **Vector Database**: Pinecone
+- **AI/ML**: Google Gemini AI
+- **Authentication**: Supabase Auth
+- **Styling**: Tailwind CSS with custom gradients
+- **Icons**: Lucide React
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Supabase account
+- Pinecone account
+- Google AI API key
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/research-nexus.git
+   cd research-nexus
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env.local` file with your API keys:
+   ```env
+   # Supabase
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+   # Pinecone
+   PINECONE_API_KEY=your_pinecone_api_key
+   PINECONE_INDEX_NAME=your_index_name
+
+   # Google AI (Gemini)
+   GOOGLE_AI_API_KEY=your_gemini_api_key
+   ```
+
+4. **Database Setup**
+   Create a `documents` table in Supabase:
+   ```sql
+   CREATE TABLE documents (
+     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+     file_name TEXT NOT NULL,
+     file_size BIGINT,
+     status TEXT DEFAULT 'processing',
+     chunks_count INTEGER,
+     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+   );
+   ```
+
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open [http://localhost:3000](http://localhost:3000)**
+
+## 📁 Project Structure
+
+```
+research-nexus/
+├── app/
+│   ├── api/
+│   │   ├── chat/          # Chat API endpoint
+│   │   └── upload/        # File upload API
+│   ├── auth/
+│   │   ├── login/         # Login page
+│   │   └── signup/        # Signup page
+│   ├── dashboard/         # Protected dashboard
+│   │   ├── documents/     # Document management
+│   │   ├── upload/        # File upload interface
+│   │   └── layout.tsx     # Dashboard layout
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Landing page
+├── components/
+│   └── Authform.tsx       # Authentication form
+├── lib/
+│   ├── gemini.ts          # Gemini AI integration
+│   ├── pinecone.ts        # Pinecone client
+│   ├── supabase-client.ts # Supabase client
+│   └── textchunker.ts     # Text chunking utilities
+└── utils/
+    └── pdfparser.ts       # PDF text extraction
+```
+
+## 🔧 API Endpoints
+
+### POST `/api/chat`
+Processes user questions and returns AI-generated answers with citations.
+
+**Request:**
+```json
+{
+  "question": "What are the main findings of this paper?"
+}
+```
+
+**Response:**
+```json
+{
+  "answer": "The paper presents several key findings...",
+  "citations": ["Source 1: paper.pdf", "Source 2: paper.pdf"]
+}
+```
+
+### POST `/api/upload`
+Uploads and processes research documents.
+
+**Request:** FormData with `file` field
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Document processed successfully",
+  "chunksProcessed": 45
+}
+```
+
+## 🎯 Usage
+
+1. **Sign Up/Login** - Create an account or sign in
+2. **Upload Documents** - Add your research papers (PDF/DOCX)
+3. **Ask Questions** - Use the chat interface to query your documents
+4. **View Documents** - Manage your uploaded files in the dashboard
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Next.js](https://nextjs.org/) - The React framework
+- [Supabase](https://supabase.com/) - Backend as a service
+- [Pinecone](https://pinecone.io/) - Vector database
+- [Google Gemini AI](https://ai.google.dev/) - AI model
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
+
+---
+
+Built with ❤️ for researchers, by developers
 
 🧠 Text extraction & intelligent chunking
 

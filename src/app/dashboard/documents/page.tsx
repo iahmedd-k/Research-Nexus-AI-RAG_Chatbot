@@ -3,6 +3,7 @@
 import { FileText, Trash2, Calendar } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase-client';
+import Link from 'next/link';
 
 type Document = {
   id: string;
@@ -48,9 +49,9 @@ export default function MyDocumentsPage() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-white mb-2">My Documents</h1>
-          <p className="text-gray-400">Loading documents...</p>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">My Documents</h1>
+          <p className="text-gray-400 text-lg">Loading documents...</p>
         </div>
       </div>
     );
@@ -59,12 +60,12 @@ export default function MyDocumentsPage() {
   return (
     <div className="max-w-6xl mx-auto">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white mb-2">
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
           My Documents
         </h1>
-        <p className="text-gray-400">
-          Manage and review all documents you’ve uploaded to ResearchNexus.
+        <p className="text-gray-400 text-lg">
+          Manage and review all documents you've uploaded to Research Nexus.
         </p>
       </div>
 
@@ -73,34 +74,34 @@ export default function MyDocumentsPage() {
         {documents.map((doc) => (
           <div
             key={doc.id}
-            className="bg-gray-900 border border-indigo-900/40 rounded-2xl p-5 shadow-lg hover:shadow-indigo-900/30 transition-shadow"
+            className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-blue-500/50 transition-all duration-300 group"
           >
             {/* Icon */}
-            <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-600/20 mb-4">
-              <FileText className="w-6 h-6 text-indigo-400" />
+            <div className="bg-blue-600/20 p-4 rounded-xl w-fit mb-6 group-hover:bg-blue-600/30 transition-colors">
+              <FileText className="w-8 h-8 text-blue-400" />
             </div>
 
             {/* Title */}
-            <h3 className="text-white font-semibold truncate mb-1">
+            <h3 className="text-white font-semibold text-lg truncate mb-2">
               {doc.name}
             </h3>
 
             {/* Meta */}
-            <div className="text-sm text-gray-400 space-y-1">
-              <div className="flex items-center gap-2">
+            <div className="text-sm text-gray-400 space-y-2 mb-6">
+              <div className="flex items-center gap-3">
                 <FileText className="w-4 h-4" />
                 {doc.pages} pages
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <Calendar className="w-4 h-4" />
                 {doc.uploadedAt}
               </div>
             </div>
 
             {/* Actions */}
-            <div className="mt-4 flex justify-end">
+            <div className="flex justify-end">
               <button
-                className="flex items-center gap-2 text-sm text-red-400 hover:text-red-500 transition-colors"
+                className="flex items-center gap-2 text-sm text-red-400 hover:text-red-300 transition-colors px-4 py-2 rounded-lg hover:bg-red-600/20"
                 onClick={() => alert('Delete functionality coming soon')}
               >
                 <Trash2 className="w-4 h-4" />
@@ -114,11 +115,19 @@ export default function MyDocumentsPage() {
       {/* Empty State */}
       {documents.length === 0 && (
         <div className="flex flex-col items-center justify-center mt-20 text-gray-500">
-          <FileText className="w-14 h-14 mb-4 text-indigo-500" />
-          <p className="text-lg font-medium">No documents uploaded</p>
-          <p className="text-sm">
-            Upload your first paper to start asking questions
+          <div className="bg-blue-600/20 p-6 rounded-full mb-6">
+            <FileText className="w-16 h-16 text-blue-400" />
+          </div>
+          <h3 className="text-xl font-semibold text-white mb-2">No documents uploaded</h3>
+          <p className="text-gray-400 mb-6 text-center max-w-md">
+            Upload your first paper to start asking questions and getting AI-powered insights.
           </p>
+          <Link
+            href="/dashboard/upload"
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            Upload Documents
+          </Link>
         </div>
       )}
     </div>

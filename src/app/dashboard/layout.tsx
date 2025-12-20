@@ -25,9 +25,9 @@ const NavLink = ({
 }) => (
   <Link
     href={href}
-    className="flex items-center p-3 text-sm font-medium rounded-lg text-gray-300 hover:bg-indigo-600 hover:text-white transition-colors duration-200"
+    className="group flex items-center p-4 text-sm font-medium rounded-xl text-gray-300 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 hover:text-white transition-all duration-300 hover:scale-105"
   >
-    <Icon className="w-5 h-5 mr-3 flex-shrink-0" />
+    <Icon className="w-6 h-6 mr-4 flex-shrink-0 group-hover:text-blue-400 transition-colors" />
     <span className="truncate">{label}</span>
   </Link>
 );
@@ -46,10 +46,10 @@ export default function DashboardLayout({
   };
 
   const SidebarContent = (
-    <aside className="w-64 bg-gray-900 flex flex-col p-4 border-r border-indigo-900/30">
+    <aside className="w-72 bg-gradient-to-b from-slate-900 to-slate-800 flex flex-col p-6 border-r border-slate-700/50 shadow-2xl">
       {/* Logo */}
-      <div className="text-2xl font-extrabold text-indigo-400 mb-8 tracking-wide border-b border-indigo-900/50 pb-4">
-        ResearchNexus AI
+      <div className="text-2xl font-extrabold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text mb-8 tracking-wide border-b border-slate-700 pb-4">
+        Research Nexus
       </div>
 
       {/* Main Nav */}
@@ -57,7 +57,7 @@ export default function DashboardLayout({
         <NavLink
           icon={MessageCircle}
           href="/dashboard"
-          label="Ask My Papers"
+          label="Chat Assistant"
         />
         <NavLink
           icon={FileText}
@@ -67,7 +67,7 @@ export default function DashboardLayout({
         <NavLink
           icon={Upload}
           href="/dashboard/upload"
-          label="Upload New Paper"
+          label="Upload Papers"
         />
       </nav>
 
@@ -80,9 +80,9 @@ export default function DashboardLayout({
         />
         <button
           onClick={handleLogout}
-          className="w-full flex items-center p-3 text-sm font-medium rounded-lg text-red-400 hover:bg-gray-700 transition-colors duration-200"
+          className="w-full flex items-center p-4 text-sm font-medium rounded-xl text-red-400 hover:bg-red-600/20 hover:text-red-300 transition-all duration-300"
         >
-          <LogOut className="w-5 h-5 mr-3" />
+          <LogOut className="w-6 h-6 mr-4" />
           Sign Out
         </button>
       </div>
@@ -110,27 +110,27 @@ export default function DashboardLayout({
       >
         {SidebarContent}
         <button
-          className="absolute top-4 right-4 p-2 bg-indigo-600 rounded-full"
+          className="absolute top-4 right-4 p-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          <X className="w-5 h-5 text-white" />
+          <X className="w-6 h-6 text-white" />
         </button>
       </div>
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-y-auto">
         {/* Mobile Top Bar */}
-        <header className="md:hidden sticky top-0 z-30 bg-gray-900 p-4 border-b border-indigo-900/50">
+        <header className="md:hidden sticky top-0 z-30 bg-gradient-to-r from-slate-900 to-slate-800 p-4 border-b border-slate-700/50 shadow-lg backdrop-blur-sm">
           <button
             onClick={() => setIsMobileMenuOpen(true)}
-            className="text-gray-300 hover:text-indigo-400"
+            className="text-gray-300 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-slate-800"
           >
             <Menu className="w-6 h-6" />
           </button>
         </header>
 
         {/* Page Content */}
-        <div className="p-4 sm:p-8 flex-1">{children}</div>
+        <div className="p-6 sm:p-8 flex-1 bg-gradient-to-br from-slate-950 to-slate-900 min-h-screen">{children}</div>
       </main>
     </div>
   );
