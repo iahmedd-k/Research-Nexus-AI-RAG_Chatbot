@@ -3,17 +3,22 @@ import { embed } from '@/lib/gemini'
 import { getPineconeIndex } from '@/lib/pinecone'
 import { extractText } from '@/utils/pdfparser'
 import { supabase } from '@/lib/supabase-client'
+import { NextRequest } from 'next/server'
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    // Get user from auth
+    // Get the authorization header
     const authHeader = req.headers.get('authorization')
-    if (!authHeader) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser(authHeader.replace('Bearer ', ''))
+    const token = authHeader.replace('Bearer ', '')
+
+    // Verify the JWT token and get user
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token)
     if (authError || !user) {
+      console.error('Auth error:', authError)
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -73,8 +78,7 @@ export async function POST(req: Request) {
         user_id: user.id,
         file_name: file.name,
         file_size: file.size,
-        status: 'indexed',
-        chunks_count: chunks.length
+        status: 'indexed'
       })
 
     if (dbError) {
@@ -86,7 +90,7 @@ export async function POST(req: Request) {
 
     return Response.json({
       success: true,
-      message: `Document "${file.name}" has been processed and ${chunks.length} text chunks have been indexed.`,
+      message: `Document "${file.name}" has been processed and indexed successfully.`,
       chunksProcessed: chunks.length
     })
 
@@ -94,7 +98,7 @@ export async function POST(req: Request) {
     console.error('Upload error:', error)
     return Response.json({
       error: 'An error occurred while processing your document. Please try again.',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      details: process.env.NODE_ENV === 'development' ? (error as Error).message : undefined
     }, { status: 500 })
   }
 }
