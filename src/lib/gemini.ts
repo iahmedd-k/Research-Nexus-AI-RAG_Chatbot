@@ -52,7 +52,7 @@ function createFallbackEmbedding(text: string): number[] {
   embedding[1] += sentenceCount * 0.1; 
   embedding[2] += avgWordLength * 0.1; 
 
-  // Normalize the embedding
+
   const magnitude = Math.sqrt(embedding.reduce((sum, val) => sum + val * val, 0));
   return embedding.map(val => val / magnitude);
 }
