@@ -49,8 +49,8 @@ function createFallbackEmbedding(text: string): number[] {
   const avgWordLength = words.reduce((sum, word) => sum + word.length, 0) / words.length;
 
   embedding[0] += textLength * 0.001; 
-  embedding[1] += sentenceCount * 0.1; // Structure influence
-  embedding[2] += avgWordLength * 0.1; // Word complexity influence
+  embedding[1] += sentenceCount * 0.1; 
+  embedding[2] += avgWordLength * 0.1; 
 
   // Normalize the embedding
   const magnitude = Math.sqrt(embedding.reduce((sum, val) => sum + val * val, 0));
